@@ -7,11 +7,19 @@ class Product extends CI_Controller {
 				$this->load->model('product_model');
 				$this->load->library('session');
 				$this->load->helper('url');
+				$this->_init();
+			}
+	
+		private function _init(){
+				$this->output->set_template('default');
+
+				$this->load->js('assets/themes/default/js/jquery-1.9.1.min.js');
+				$this->load->js('assets/themes/default/hero_files/bootstrap-transition.js');
+				$this->load->js('assets/themes/default/hero_files/bootstrap-collapse.js');
 			}
 			
 		public function index(){
 				$data_products['product'] = $this->product_model->Show_All_Product();
-				$this->load->view('user_home');	
 				$this->load->view('products',$data_products);	
 			}
 			
@@ -31,7 +39,6 @@ class Product extends CI_Controller {
 			}
 		
 		public function Add_New_Product(){
-				$this->load->view('user_home');
 				$this->load->view('Product_New');
 			}
 		
@@ -56,7 +63,6 @@ class Product extends CI_Controller {
 		
 		public function Edit_Product_Info($item){
 				$product['data'] = $this->product_model->Get_Info($item);
-				$this->load->view('user_home');
 				$this->load->view('Product_Profile',$product);
 			}
 		
