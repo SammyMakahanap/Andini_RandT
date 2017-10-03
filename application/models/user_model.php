@@ -7,7 +7,7 @@ class User_model extends CI_Model {
 	}
 	
 	function check_password($username){
-			$this->db->where('username',$username);
+			$this->db->where('User_Name',$username);
 			return $this->db->get('user')->row();
 		}
 

@@ -10,22 +10,34 @@ class Login extends CI_Controller {
 			}
 
 		public function index(){
-			$this->load->view('login');	
+				if ($this->session->userdata('Status') == 'login')
+					{//$this->load->view('User_Home');
+						redirect('user');
+					}
+				else{$this->load->view('login');}	
 			}
 			
 		public function validate(){
-			$username = $this->input->post('username');
-			$password = $this->input->post('password');
-			
-			$user['item']= $this->user_model->check_password($username);
-			if(empty($user)){
-					redirect('login');
-				}else{					
-				 if($password == $user['item']->password){
-						redirect('user');
-					}else{
-						redirect ('login');
-					} 
-				}
+				$username = $this->input->post('username');
+				$password = $this->input->post('password');
+				
+				$user['item']= $this->user_model->check_password($username);
+				if(empty($user)){
+						redirect('login');
+					}else{					
+					 if($password == $user['item']->Password){
+							$data_user = array(
+									'User_Name'	=> $username,
+									'Name'		=> $user['item']->Name,
+									'Gender'	=> $user['item']->Gender,
+									'Status'	=> 'login',
+									'Level'		=> $user['item']->Level_User
+								);
+							$this->session->set_userdata($data_user);
+							redirect('user');
+						}else{
+							redirect ('login');
+						} 
+					}	
 			}
 	}
